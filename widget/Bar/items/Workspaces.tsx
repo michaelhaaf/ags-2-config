@@ -5,7 +5,7 @@ import BarButton from "../BarButton";
 import { range } from "../../../lib/utils";
 import BarItem from "../BarItem";
 
-export default () => {
+export default (prop: { gdkmonitor: Gdk.Monitor }) => {
 	const hypr = Hyprland.get_default();
 	const ws: number = 10;
 
@@ -21,10 +21,16 @@ export default () => {
       return "bar__workspaces-indicator"
   }
 
+  const workspaceOnCurrentMonitor = (workspaceId: number) =>
+    hypr.get_workspace(workspaceId)?.get_monitor().get_model() === prop.gdkmonitor.get_model()
+
 	return (
 		<BarItem>
 			<box spacing={8}>
-				{range(ws).map((i) => {
+				{
+          range(ws)
+            .filter(i => workspaceOnCurrentMonitor(i))
+            .map((i) => {
 					return (
 						<button
 							valign={Gtk.Align.CENTER}

@@ -12,11 +12,11 @@ import KeyboardLayout from "./items/KeyboardLayout";
 import Weather from "./items/Weather";
 import RecordingIndicator from "./items/RecordingIndicator";
 
-const Start = () => {
+const Start = (prop: { gdkmonitor: Gdk.Monitor }) => {
 	return (
 		<box halign={Gtk.Align.START} spacing={spacing}>
 			<AppLauncher />
-			<Workspaces />
+			<Workspaces gdkmonitor = {prop.gdkmonitor}/>
 			<ActiveApp />
 		</box>
 	);
@@ -62,7 +62,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
 			application={App}
 		>
 			<centerbox className="bar" valign={Gtk.Align.CENTER}>
-				<Start />
+				<Start gdkmonitor = {gdkmonitor} />
 				<Center />
 				<End />
 			</centerbox>
