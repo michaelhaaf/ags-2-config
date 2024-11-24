@@ -13,59 +13,59 @@ import Weather from "./items/Weather";
 import RecordingIndicator from "./items/RecordingIndicator";
 
 const Start = (prop: { gdkmonitor: Gdk.Monitor }) => {
-	return (
-		<box halign={Gtk.Align.START} spacing={spacing}>
-			<AppLauncher />
-			<Workspaces gdkmonitor = {prop.gdkmonitor}/>
-			<ActiveApp />
-		</box>
-	);
+  return (
+    <box halign={Gtk.Align.START} spacing={spacing}>
+      <AppLauncher />
+      <Workspaces gdkmonitor={prop.gdkmonitor} />
+      <ActiveApp />
+    </box>
+  );
 };
 
 const Center = () => {
-	return (
-		<box spacing={spacing}>
-			<Clock />
-		</box>
-	);
+  return (
+    <box spacing={spacing}>
+      <Clock />
+    </box>
+  );
 };
 
 const End = () => {
-	return (
-		<box halign={Gtk.Align.END} spacing={spacing}>
-			<RecordingIndicator />
-			<Weather />
-			<KeyboardLayout />
-			<box className="bar__rounded-box" spacing={spacing / 2}>
-				<Notifications />
-				<Tray />
-				<SystemIndicators />
-			</box>
-			<Battery />
-		</box>
-	);
+  return (
+    <box halign={Gtk.Align.END} spacing={spacing}>
+      <RecordingIndicator />
+      <Weather />
+      <KeyboardLayout />
+      <box className="bar__rounded-box" spacing={spacing / 2}>
+        <Notifications />
+        <Tray />
+        <SystemIndicators />
+      </box>
+      <Battery />
+    </box>
+  );
 };
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
-	return (
-		<window
-			vexpand={true}
-			className="Bar"
-			namespace="bar"
-			gdkmonitor={gdkmonitor}
-			exclusivity={Astal.Exclusivity.EXCLUSIVE}
-			anchor={
-				Astal.WindowAnchor.TOP |
-				Astal.WindowAnchor.LEFT |
-				Astal.WindowAnchor.RIGHT
-			}
-			application={App}
-		>
-			<centerbox className="bar" valign={Gtk.Align.CENTER}>
-				<Start gdkmonitor = {gdkmonitor} />
-				<Center />
-				<End />
-			</centerbox>
-		</window>
-	);
+  return (
+    <window
+      vexpand={true}
+      className="Bar"
+      namespace="bar"
+      gdkmonitor={gdkmonitor}
+      exclusivity={Astal.Exclusivity.EXCLUSIVE}
+      anchor={
+        Astal.WindowAnchor.TOP |
+        Astal.WindowAnchor.LEFT |
+        Astal.WindowAnchor.RIGHT
+      }
+      application={App}
+    >
+      <centerbox className="bar" valign={Gtk.Align.CENTER}>
+        <Start gdkmonitor={gdkmonitor} />
+        <Center />
+        <End />
+      </centerbox>
+    </window>
+  );
 }
