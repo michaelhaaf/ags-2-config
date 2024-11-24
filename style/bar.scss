@@ -112,6 +112,10 @@
 		border-radius: 100px;
 		background-color: $primary;
 	}
+
+  &.occupied {
+		background-color: $primary;
+  }
 }
 
 .bar__active-app {

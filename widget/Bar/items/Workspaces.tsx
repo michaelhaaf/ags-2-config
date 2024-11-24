@@ -12,6 +12,15 @@ export default () => {
 	const focusWorkspace = (workspaceId: number) =>
 		hypr.dispatch("workspace", workspaceId.toString());
 
+  const workspaceIndicatorClass = (workspaceId: number, focusedWorkspaceId: number) => {
+    if (workspaceId === focusedWorkspaceId)
+      return "bar__workspaces-indicator active";
+    else if ((hypr.get_workspace(workspaceId)?.get_clients().length) > 0)
+      return "bar__workspaces-indicator occupied";
+    else
+      return "bar__workspaces-indicator"
+  }
+
 	return (
 		<BarItem>
 			<box spacing={8}>
@@ -20,11 +29,7 @@ export default () => {
 						<button
 							valign={Gtk.Align.CENTER}
 							className={bind(hypr, "focusedWorkspace").as(
-								(fw) => {
-									return i === fw.id
-										? "bar__workspaces-indicator active"
-										: "bar__workspaces-indicator";
-								},
+								(fw) => workspaceIndicatorClass(i, fw.id),
 							)}
 							onClicked={() => focusWorkspace(i)}
 						/>
