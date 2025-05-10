@@ -1,7 +1,7 @@
 import { exec, GLib, GObject, readFile, register, writeFileAsync } from "astal";
 import { Gtk } from "astal/gtk3";
 import { fetch, paramsToString, parseQueryParams } from "../lib/fetch";
-import WebKit2 from "gi://WebKit2?version=4.1";
+// import WebKit2 from "gi://WebKit2?version=4.1";
 import { ensureDirectory } from "../lib/utils";
 
 @register()
@@ -30,32 +30,32 @@ class GoogleOAuth2Service extends GObject.Object {
 		return `${baseUrl}?${paramsToString(params)}`;
 	}
 
-	openAuthorizationWebView() {
-		const webView = new WebKit2.WebView();
-		const authUrl = this.getAuthorizationUrl();
-
-		webView.load_uri(authUrl);
-
-		webView.connect(
-			"resource-load-started",
-			(self: WebKit2.WebView, _resource, request) => {
-				const uri = request.get_uri();
-				if (uri.startsWith(this._redirectUri)) {
-					const paramsString = uri.split("?")[1];
-					const urlParams = parseQueryParams(paramsString);
-					const authCode = urlParams["code"];
-					if (authCode)
-						this.retrieveAccessToken(authCode).then(() => {});
-				}
-				return true;
-			},
-		);
-
-		// Show WebView in a Gtk window
-		const window = new Gtk.Window({ title: "Google OAuth2" });
-		window.add(webView);
-		window.show_all();
-	}
+	// openAuthorizationWebView() {
+	// 	const webView = new WebKit2.WebView();
+	// 	const authUrl = this.getAuthorizationUrl();
+	//
+	// 	webView.load_uri(authUrl);
+	//
+	// 	webView.connect(
+	// 		"resource-load-started",
+	// 		(self: WebKit2.WebView, _resource, request) => {
+	// 			const uri = request.get_uri();
+	// 			if (uri.startsWith(this._redirectUri)) {
+	// 				const paramsString = uri.split("?")[1];
+	// 				const urlParams = parseQueryParams(paramsString);
+	// 				const authCode = urlParams["code"];
+	// 				if (authCode)
+	// 					this.retrieveAccessToken(authCode).then(() => {});
+	// 			}
+	// 			return true;
+	// 		},
+	// 	);
+	//
+	// 	// Show WebView in a Gtk window
+	// 	const window = new Gtk.Window({ title: "Google OAuth2" });
+	// 	window.add(webView);
+	// 	window.show_all();
+	// }
 
 	// Method to exchange authorization code for access token
 	async retrieveAccessToken(authCode: string) {

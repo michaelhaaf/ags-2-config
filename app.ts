@@ -43,24 +43,29 @@ function main() {
 	}
 
 	App.connect("monitor-added", (_, gdkmonitor) => {
+		console.log("monitor added");
 		bars.set(gdkmonitor, Bar(gdkmonitor));
 		notificationsPopups.set(gdkmonitor, NotificationsPopup(gdkmonitor));
 		osds.set(gdkmonitor, OSD(gdkmonitor));
 	});
 
 	App.connect("monitor-removed", (_, gdkmonitor) => {
+		console.log("monitor removed");
+
 		bars.get(gdkmonitor)?.destroy();
-		notificationsPopups.get(gdkmonitor)?.destroy();
-		osds.get(gdkmonitor)?.destroy();
 		bars.delete(gdkmonitor);
+
+		notificationsPopups.get(gdkmonitor)?.destroy();
 		notificationsPopups.delete(gdkmonitor);
+
+		osds.get(gdkmonitor)?.destroy();
 		osds.delete(gdkmonitor);
 	});
 
 	// if (!GoogleOAuth2Service.isAuthenticated()) {
 	// 	GoogleOAuth2Service.openAuthorizationWebView();
 	// }
-	//
+
 	monitorColorsChange();
 	monitorDashboard();
 }
